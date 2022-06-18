@@ -1,7 +1,7 @@
 {
-  "name": "tohtml",
-  "version": "1.0.0",
-  "description": "Fast and simple html generator",
+  "name": "wrihtml",
+  "version": "1.0.2",
+  "description": "Fast and easy html generator",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,8 @@
     "html",
     "render",
     "fast",
-    "generator"
+    "generator",
+    "write"
   ],
   "author": "IOBEAR",
   "license": "MIT"
