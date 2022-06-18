@@ -1,26 +1,16 @@
 /**
- * =>method 1, includes class only: element [class] text: button [btn btn-info] button1
- * 
- * =>method 2, includes attributes: element [attributes] text:  button [class="btn btn-danger" style="font-size:large;" onclick="save()"] save
- * 
+ * 1. includes class only: element [class] text: button [btn btn-info] button1
+ * 2. includes attributes: element [attributes] text:  button [class="btn btn-danger" style="font-size:large;" onclick="save()"] save
  * =>with child element
- * 
  * div/ [col-12 col-md-6]
- * 
  * h1  title 1 
- * 
  * h2  title 2
- * 
  * /div  
  * 
  * =>with multiple line inner text
- * 
  * h1/ [text-dark] 
- * 
  * // first line text in h1
- * 
  * // 2nd line text in h1
- * 
  * /h1
  * 
  * @param {String} content 
@@ -37,7 +27,7 @@ module.exports = function (content) {
         if (element.length > 0) {
 
             //檢查有無參數
-            if (r.indexOf(' [') > -1 && r.match(/^[a-zA-Z0-9/]*? \[/)) {
+            if (r.indexOf(' [') > -1 && r.match(/^[a-zA-Z0-9/]*? \[.*?\]/)) {
                 attrib = r.match(/\[.*?\]/)[0].replace(/\[|\]/g, "")
 
             }
@@ -71,7 +61,7 @@ module.exports = function (content) {
 
                 var text = ''
                 if (r.indexOf(']') > -1) {
-                    text = r.replace(/.*?[\]] */, '')
+                    text = r.replace(/.*?\] */, '')
                 } else if (r.indexOf(' ') > -1) {
 
                     text = r.replace(/.*? /, '')
