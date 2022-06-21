@@ -34,7 +34,7 @@ module.exports = function (content) {
 
 
 
-            if (element.substring(0, 1) !== '/') { //非/開頭 
+            if (element.substring(0, 1) !== '/' && element.substring(0, 1) !== '<') { //非/, <開頭 
 
                 html += `<${element.replace('/', '')} ${attrib.indexOf('=') < 0 ? `class="${attrib.replace(/\./g, '')}"` : attrib} `
             }
@@ -56,7 +56,13 @@ module.exports = function (content) {
                     html += `<${element}>
                     `
                 }
-            } else {
+            }
+            else if (element.substring(0, 1) === '<') {  //  html 格式 pass
+
+                html += r
+
+            }
+            else {
 
 
                 var text = ''
