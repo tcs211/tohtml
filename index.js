@@ -16,9 +16,15 @@
  * @param {String} content 
  */
 module.exports = function (content) {
+    var level = 0
     var rows = content.split('\n') // 分行
     var html = ''
+
     for (var r of rows) {
+        var headtab = ''
+        for (var i = 0; i < level; i++) {
+            headtab += '\t' //行前面的space
+        }
 
         r = r.replace(/^ +/, '') //去除頭space
         var element = r.split(' ')[0]//
@@ -36,7 +42,9 @@ module.exports = function (content) {
 
             if (element.substring(0, 1) !== '/' && element.substring(0, 1) !== '<') { //非/, <開頭 
 
-                html += `<${element.replace('/', '')} ${attrib.indexOf('=') < 0 ? `class="${attrib.replace(/\./g, '')}"` : attrib} `
+
+                html += `${headtab}<${element.replace('/', '')}${attrib.length > 0 && attrib.indexOf('=') < 0 ? ` class="${attrib.replace(/\./g, '')}"` : attrib.length > 0 ? ' ' + attrib : ''}`
+
             }
 
             if (r.match(/^[a-zA-Z0-9]+?\//)) { //  例div/ 
@@ -46,20 +54,20 @@ module.exports = function (content) {
                 } else if (r.indexOf(' ') > -1) {
                     text = r.replace(/.*?\/ */, '')
                 }
-                html += `>${text}
-                    `
+                html += `>${text}\n`
+                level += 1
             }
             else if (element.substring(0, 1) === '/') {  //  例/div, // 換行
-                if (element.substring(1, 2) === '/') {
-                    html += r.replace(/\/\/ */, '')
+                if (element.substring(1, 2) === '/') { // 換行
+                    html += headtab + r.replace(/\/\/ */, '') + '\n'
                 } else {
-                    html += `<${element}>
-                    `
+                    html += `${headtab}<${element}>\n`
+                    level -= 1
                 }
             }
             else if (element.substring(0, 1) === '<') {  //  html 格式 pass
 
-                html += r
+                html += headtab + r + '\n'
 
             }
             else {
@@ -72,10 +80,7 @@ module.exports = function (content) {
 
                     text = r.replace(/.*? /, '')
                 }
-                html += `>
-                    ${text}
-                    </${element}>
-                    `
+                html += `>${text}</${element}>\n`
 
             }
 
